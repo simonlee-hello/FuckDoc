@@ -2,22 +2,22 @@ using System.Collections.Generic;
 
 namespace FuckDoc.Utils
 {
-    public class TransformUtil
+    public static class TransformUtil
     {
         // 将输入的字符串解析为数字和单位，然后根据单位将其转换为字节数
         public static long SizeToBytes(string maxSize)
         {
             // 去掉空格并转为大写
-            string maxSizeUpper = maxSize.Replace(" ", "").ToUpper();
+            var maxSizeUpper = maxSize.Replace(" ", "").ToUpper();
 
             // 分离数字和单位
-            string numStr = maxSizeUpper;
-            string unit = "";
-            foreach (char c in maxSizeUpper)
+            var numStr = maxSizeUpper;
+            var unit = "";
+            foreach (var c in maxSizeUpper)
             {
                 if (c < '0' || c > '9')
                 {
-                    int i = maxSizeUpper.IndexOf(c);
+                    var i = maxSizeUpper.IndexOf(c);
                     numStr = maxSizeUpper.Substring(0, i);
                     unit = maxSizeUpper.Substring(i);
                     break;
@@ -72,15 +72,15 @@ namespace FuckDoc.Utils
         public static List<string> ConvertStringToList(string input)
         {
             // 以逗号分隔字符串
-            string[] parts = input.Split(',');
+            var parts = input.Split(',');
 
             // 初始化结果列表
-            List<string> result = new List<string>(parts.Length);
+            var result = new List<string>(parts.Length);
 
             // 去掉每个部分的前后空白，并添加到结果列表
-            foreach (string part in parts)
+            foreach (var part in parts)
             {
-                string trimmedPart = part.Trim();
+                var trimmedPart = part.Trim();
                 result.Add(trimmedPart);
             }
 
@@ -90,16 +90,16 @@ namespace FuckDoc.Utils
         // 将字符串转为集合，例如："docx,pdf,xlsx" -> {".pdf", ".docx", ".doc", ".xlsx"}
         public static HashSet<string> StringToHashSet(string supportedExtensions)
         {
-            HashSet<string> set = new HashSet<string>();
+            var set = new HashSet<string>();
 
             // 将以逗号分隔的字符串分割成数组
-            string[] list = supportedExtensions.Split(',');
+            var list = supportedExtensions.Split(',');
 
             // 遍历数组并将每个扩展名添加到集合中
-            foreach (string ext in list)
+            foreach (var ext in list)
             {
                 // 去除空格
-                string trimmedExt = ext.Trim();
+                var trimmedExt = ext.Trim();
                 if (!string.IsNullOrEmpty(trimmedExt))
                 {
                     // 将扩展名转换为小写并添加到集合中
