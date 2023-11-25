@@ -91,6 +91,7 @@ namespace FuckDoc.Filter
                         // 将文件内容转换为小写，然后进行比较
                         if (line.ToLower().Contains(FlagInfo.Keyword.ToLower()))
                         {
+                            file.Close();
                             return true;
                         }
                     }

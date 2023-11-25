@@ -25,7 +25,7 @@ namespace FuckDoc.Process
             }
 
             // 创建一个 ZIP 文件
-            using (var zip = ZipFile.Open(zipFilePath, ZipArchiveMode.Update))
+            using (var zip = ZipFile.Open(zipFilePath, ZipArchiveMode.Create))
             {
                 // 递归处理目录中的文件和子目录
                 ProcessDirectoryRecursively(rootPath, zip, fileFilter);
@@ -43,7 +43,7 @@ namespace FuckDoc.Process
             // 处理目录中的文件
             foreach (var file in directory.GetFiles())
             {
-                // TODO:计算文件总大小 
+ 
                 
                 if (!fileFilter.Filter(file.FullName, file)) continue;
                 // Console.WriteLine(file.FullName);
@@ -81,7 +81,16 @@ namespace FuckDoc.Process
                 relativePath = relativePath.Replace("\\", "/");
 
                 // 在 ZIP 文件中创建一个条目并从源文件复制内容
-                zip.CreateEntryFromFile(sourceFilePath, relativePath);
+                // zip.CreateEntryFromFile(sourceFilePath, relativePath);
+                // 创建 ZIP 文件中的条目
+                var entry = zip.CreateEntry(relativePath);
+
+                // 打开文件流并将文件内容写入 ZIP 条目
+                using (var entryStream = entry.Open())
+                using (var sourceStream = File.OpenRead(sourceFilePath))
+                {
+                    sourceStream.CopyTo(entryStream);
+                }
 
         }
     }

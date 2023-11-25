@@ -1,16 +1,14 @@
-﻿using System;
-using System.IO;
-using FuckDoc.Filter;
-using FuckDoc.Process;
+﻿using FuckDoc.Option;
 using FuckDoc.Utils;
 
 namespace FuckDoc
 {
     public static class Program
     {
+        // TODO: 内存问题
         private static void Main()
         {
-            var info = new Option.FlagInfo();
+            var info = new FlagInfo();
             info.InitFlag();
             LogUtil.PrintFlagInfo(info);
             Process.Process.WalkAndProcess(info);
