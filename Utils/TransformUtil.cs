@@ -5,21 +5,21 @@ namespace FuckDoc.Utils
     public static class TransformUtil
     {
         // 将输入的字符串解析为数字和单位，然后根据单位将其转换为字节数
-        public static long SizeToBytes(string maxSize)
+        public static long SizeToBytes(string size)
         {
             // 去掉空格并转为大写
-            var maxSizeUpper = maxSize.Replace(" ", "").ToUpper();
+            var sizeUpper = size.Replace(" ", "").ToUpper();
 
             // 分离数字和单位
-            var numStr = maxSizeUpper;
+            var numStr = sizeUpper;
             var unit = "";
-            foreach (var c in maxSizeUpper)
+            foreach (var c in sizeUpper)
             {
                 if (c < '0' || c > '9')
                 {
-                    var i = maxSizeUpper.IndexOf(c);
-                    numStr = maxSizeUpper.Substring(0, i);
-                    unit = maxSizeUpper.Substring(i);
+                    var i = sizeUpper.IndexOf(c);
+                    numStr = sizeUpper.Substring(0, i);
+                    unit = sizeUpper.Substring(i);
                     break;
                 }
             }

@@ -10,7 +10,7 @@ namespace FuckDoc.Utils
         public static void PrintFlagInfo(FlagInfo info)
         {
             // 输出前带日志级别的格式化输出
-            LogIfNotNull("Debug", FormatMessage("MaxSize", info.MaxSize));
+            LogIfNotNull("Debug", FormatMessage("Size", info.Size));
             LogIfNotNull("Debug", FormatMessage("OutputPath", info.OutputPath));
             LogIfNotNull("Debug", FormatMessage("AfterDateStr", info.AfterDateStr));
             LogIfNotNull("Debug", FormatMessage("RootPath", info.RootPath));

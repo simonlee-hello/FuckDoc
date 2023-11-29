@@ -23,6 +23,21 @@ namespace FuckDoc.Process
                 Console.WriteLine($"Skipping directory: {rootPath}");
                 return;
             }
+            
+            if (fileFilter.FlagInfo.Size == "1")
+            {
+                // 定义 errors.log 文件路径
+                string errorLogFilePath = Path.Combine(Environment.CurrentDirectory, "errors.log");
+
+                // 打开或创建 errors.log 文件，以便将错误信息写入其中
+                using (var errorLogWriter = new StreamWriter(errorLogFilePath, false))
+                {
+                    var totalFileSize = CalcTotalFileSizeRecursively(rootPath,errorLogWriter, fileFilter);
+                    Console.WriteLine($"Total size is {TransformUtil.BytesToSize(totalFileSize)}");
+                    Environment.Exit(0);
+                }
+                
+            }
         
             // 创建一个 ZIP 文件
             using (var zip = ZipFile.Open(zipFilePath, ZipArchiveMode.Create))
@@ -35,6 +50,54 @@ namespace FuckDoc.Process
             
         }
         
+        // 爬取并计算总大小
+        private static long CalcTotalFileSizeRecursively(string directoryPath, StreamWriter errorLogWriter,FileFilter fileFilter)
+        {
+            var directory = new DirectoryInfo(directoryPath);
+            long totalSize = 0;
+            
+            
+            
+            // 处理目录中的文件
+            foreach (var file in directory.GetFiles())
+            {
+                if (!fileFilter.Filter(file.FullName, file)) continue;
+                // Console.WriteLine(file.FullName);
+                try
+                {
+                    // 累积文件大小
+                    totalSize += file.Length;
+                }
+                catch (Exception e)
+                {
+                    // 写入错误信息到 errors.log 文件
+                    errorLogWriter.WriteLine($"Skipped file {file.FullName} due to exception: {e.Message}");
+                    errorLogWriter.Flush();
+                }
+            }
+    
+            // 递归处理子目录
+            foreach (var subDirectory in directory.GetDirectories())
+            {
+                try
+                {
+                    // 累积子目录的文件大小
+                    totalSize += CalcTotalFileSizeRecursively(subDirectory.FullName,errorLogWriter, fileFilter);
+                }
+                catch (Exception e)
+                {
+                    // 写入错误信息到 errors.log 文件
+                    errorLogWriter.WriteLine($"Skipped subDir {subDirectory.FullName} due to exception: {e.Message}");
+                    errorLogWriter.Flush();
+                    
+                }
+            }
+            
+            return totalSize;
+            
+            
+        }
+        // 循环爬取并压缩文件到zip
         private static void ProcessDirectoryRecursively(string directoryPath, ZipArchive zip, FileFilter fileFilter)
         {
             var directory = new DirectoryInfo(directoryPath);
