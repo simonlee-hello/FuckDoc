@@ -137,9 +137,14 @@ namespace FuckDoc.Process
         
         private static void AddFileToZip(ZipArchive zip, string sourceFilePath)
         {
+                var fileInfo = new FileInfo(sourceFilePath);
             
-                // 创建 ZIP 文件中的条目
-                var entry = zip.CreateEntry(sourceFilePath);
+                // // 创建 ZIP 文件中的条目
+                // var entry = zip.CreateEntry(sourceFilePath);
+                // 创建 ZIP 文件中的条目，并保留相对路径
+                var entry = zip.CreateEntry(sourceFilePath.Substring(sourceFilePath.IndexOf(fileInfo.DirectoryName, StringComparison.Ordinal)));
+                // 设置条目的修改时间，以保留文件的原始时间戳
+                entry.LastWriteTime = fileInfo.LastWriteTime;
         
                 // 打开文件流并将文件内容写入 ZIP 条目
                 using (var entryStream = entry.Open())
