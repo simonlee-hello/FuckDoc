@@ -87,7 +87,7 @@ namespace FuckDoc.Option
             SkipDirs = GetArgumentValue(args, "x") ?? "";
             FileName = GetArgumentValue(args, "f") ?? "";
             Keyword = GetArgumentValue(args, "k") ?? "";
-            Extension = GetArgumentValue(args, "e") ?? "all";
+            Extension = GetArgumentValue(args, "e") ?? "";
         }
         private static string GetArgumentValue(List<string> args, string option)
         {
