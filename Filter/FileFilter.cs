@@ -31,14 +31,14 @@ namespace FuckDoc.Filter
 
             var ext = Path.GetExtension(d.Name);
             var extensionsSet = Utils.TransformUtil.StringToHashSet(FlagInfo.Extension);
-            if (FlagInfo.Extension == "all")
-            {
-                extensionsSet = new HashSet<string>
-                {
-                    ".pdf", ".docx", ".doc", ".xlsx", ".xls", ".csv", ".pptx", ".ppt", ".zip", ".rar", ".7z", ".tar",
-                    ".gz", ".tgz"
-                };
-            }
+            // if (FlagInfo.Extension == "all")
+            // {
+            //     extensionsSet = new HashSet<string>
+            //     {
+            //         ".pdf", ".docx", ".doc", ".xlsx", ".xls", ".csv", ".pptx", ".ppt", ".zip", ".rar", ".7z", ".tar",
+            //         ".gz", ".tgz"
+            //     };
+            // }
 
             return extensionsSet.Contains(ext);
         }

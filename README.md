@@ -14,15 +14,15 @@
 ```shell
 Usage: FuckDoc [options]
 Options:
-  --max      Max file size can be zip (global option)
-  -o        Zip output path (global option)
+  -s        Get total file size (global option) (default 0)
+  -o        Zip output path (global option) (default output.zip)
   -t        Only query and pack files after the date, like '2023-10-01' (global option) (default "")
   -d        Root path to query (global option)
   -x        Paths to skip query (global option)
   -f        Query files by filename (only for QueryByFileName), eg. '-f config -f config,password,secret'
   -k        Query files in content by keyword (only for QueryByKeyword), eg. '-k config -k password:,secret:,token:'
   -e        Query files by extension, eg. '-e pdf,doc,zip'
-  --help     Show this help message
+  -h        Show this help message
 ```
 
 文件后缀查询
@@ -51,16 +51,10 @@ switch (Extension)
 ```
 
 ```shell
-FuckDoc -d C:\test -max 10GB -o output.zip #打包C:\test文件夹下所有文件
-FuckDoc -d C:\test -max 10GB -o output.zip -e all #打包C:\test文件夹下所有符合以上后缀的文件
-FuckDoc -d C:\test -max 10GB -o output.zip -e pdf #打包C:\test文件夹下所有pdf后缀的文件
-```
-
-获取符合条件的文件的总大小
-
-```shell
-# TODO
-Fdoc -d C:\test --size
+FuckDoc -d C:\test -o output.zip #打包C:\test文件夹下所有文件
+FuckDoc -d C:\test -o output.zip -e all #打包C:\test文件夹下所有符合以上后缀的文件
+FuckDoc -d C:\test -o output.zip -e pdf #打包C:\test文件夹下所有pdf后缀的文件
+Fuckdoc -d C:\test -s 1 -e all #获取符合条件的文件的总大小
 ```
 
 
