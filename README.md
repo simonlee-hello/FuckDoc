@@ -55,7 +55,7 @@ switch (Extension)
 FuckDoc -d C:\test -o output.zip #打包C:\test文件夹下所有文件
 FuckDoc -d C:\test -o output.zip -e all #打包C:\test文件夹下所有符合以上后缀的文件
 FuckDoc -d C:\test -o output.zip -e pdf #打包C:\test文件夹下所有pdf后缀的文件
-Fuckdoc -d C:\test -s 1 -e all #获取符合条件的文件的总大小
+Fuckdoc -d C:\test -s 1 -e all #只获取符合条件的文件的总大小
 Fuckdoc -d C:\ -o output.zip -f password,secret,config #通过文件名进行近似查询
 Fuckdoc -d C:\ -o output.zip -k password #通过关键字匹配文件内容进行近似查询
 ```

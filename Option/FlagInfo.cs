@@ -7,7 +7,7 @@ namespace FuckDoc.Option
 {
     public class FlagInfo
     {
-        public string Size { get; private set; }
+        public string GetSize { get; private set; }
         public string OutputPath { get; private set; }
         public string AfterDateStr { get; private set; }
         public string RootPath { get; private set; }
@@ -80,8 +80,9 @@ namespace FuckDoc.Option
         {
             var args = Environment.GetCommandLineArgs().Skip(1).ToList();
 
-            Size = GetArgumentValue(args, "s") ?? "0";
-            OutputPath = GetArgumentValue(args, "o") ?? "output.zip";
+            // Size = GetArgumentValue(args, "s") ?? "0";
+            GetSize = args.Contains("-s") ? "true" : "false"; // 如果包含 -s 则设置 Size 为 true，否则为 false
+            OutputPath = GetArgumentValue(args, "o") ?? $"output-{DateTime.Now:yyyyMMdd-HHmmss}.zip";
             AfterDateStr = GetArgumentValue(args, "t") ?? "";
             RootPath = GetArgumentValue(args, "d") ?? "";
             SkipDirs = GetArgumentValue(args, "x") ?? "";
@@ -102,8 +103,8 @@ namespace FuckDoc.Option
         {
             Console.WriteLine("Usage: FuckDoc [options]");
             Console.WriteLine("Options:");
-            Console.WriteLine("  -s        Get total file size (global option) (default 0)");
-            Console.WriteLine("  -o        Zip output path (global option) (default output.zip)");
+            Console.WriteLine("  -s        Get total file size only (global option)");
+            Console.WriteLine("  -o        Zip output path (global option) (default output-<timestamp>.zip)");
             Console.WriteLine("  -t        Only query and pack files after the date, like '2023-10-01' (global option) (default \"\")");
             Console.WriteLine("  -d        Root path to query (global option) (default CurrentUserHOME)");
             Console.WriteLine("  -x        Paths to skip query (global option) (default C:\\Windows, C:\\Program Files, C:\\Program Files (x86), C:\\inetpub, C:\\Users\\Public)");
